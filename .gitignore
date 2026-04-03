@@ -16,6 +16,7 @@ Thumbs.db
 
 # Ignore files generated during development
 .env
+.script-2.js
 .DS_Store
 .env.local
 .env.development.local

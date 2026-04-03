@@ -226,7 +226,11 @@ td.actions i.bx-edit-alt:hover {
   align-items: center;
   gap: 1rem;
   font-weight: 500;
+  /* margin-left: 10%; */
 }
+/* .sortName{
+  margin-left:-5%;
+} */
 
 .page-btn {
   background: none;
@@ -320,3 +324,10 @@ td.actions i.bx-edit-alt:hover {
 #category-list li i:hover {
   color: #ef4444;
 }
+.sort-icon {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  vertical-align: middle;
+}
+

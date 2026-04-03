@@ -1,130 +1,214 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Expense Tracker App</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-</head>
-<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <div class="app-container">
-        <div class="card section-add">
-            <div class="buttons-group">
-                <button type="button" class="btn btn-primary" id="add-btn">ADD EXPENSE</button>
-                <a href="#" id="manage-categories-link">Manage Categories</a>
-            </div>                
+      <div class="card section-add">
+        <div class="buttons-group">
+          <button type="button" class="btn btn-primary" id="add-btn">
+            ADD EXPENSE
+          </button>
+          <a href="#" id="manage-categories-link">Manage Categories</a>
+        </div>
+      </div>
+
+      <div class="card section-filters">
+        <div class="filter-grid">
+          <div class="input-group">
+            <label for="filter-start-date">Start Date</label>
+            <input type="date" id="filter-start-date" />
+          </div>
+          <div class="input-group">
+            <label for="filter-end-date">End Date</label>
+            <input type="date" id="filter-end-date" />
+          </div>
+          <div class="input-group">
+            <label for="filter-name">Filter by Name</label>
+            <input type="text" id="filter-name" />
+          </div>
+          <div class="input-group">
+            <label for="filter-category">Filter by Category</label>
+            <select id="filter-category">
+              <option value="">All Categories</option>
+            </select>
+          </div>
+          <div class="input-group search-group">
+            <button type="button" class="btn btn-secondary" id="search-btn">
+              SEARCH
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              id="clear-filters-btn"
+              style="
+                margin-left: 8px;
+                background-color: #e5e7eb;
+                color: #374151;
+              "
+            >
+              CLEAR
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card section-table">
+        <div class="table-container">
+          <table id="expense-table">
+            <thead>
+              <tr>
+                <th>SRNO</th>
+                <th onclick="sortName()">
+                  Name <i id="sort-name-icon" class="sort-icon"></i>
+                </th>
+                <th onclick="sortAmount()">
+                  Amount <i id="sort-amount-icon" class="sort-icon"></i>
+                </th>
+                <th onclick="sortCategory()">
+                  Category <i id="sort-category-icon" class="sort-icon"></i>
+                </th>
+                <th onclick="sortDate()">
+                  Date <i id="sort-date-icon" class="sort-icon"></i>
+                </th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="expense-tbody"></tbody>
+          </table>
         </div>
 
-        <div class="card section-filters">
-            <div class="filter-grid">
-                <div class="input-group">
-                    <label for="filter-start-date">Start Date</label>
-                    <input type="date" id="filter-start-date">
-                </div>
-                <div class="input-group">
-                    <label for="filter-end-date">End Date</label>
-                    <input type="date" id="filter-end-date">
-                </div>
-                <div class="input-group">
-                    <label for="filter-name">Filter by Name</label>
-                    <input type="text" id="filter-name" placeholder="Search by Name">
-                </div>
-                <div class="input-group">
-                    <label for="filter-category">Filter by Category</label>
-                    <select id="filter-category">
-                        <option value="">All Categories</option>
-                    </select>
-                </div>
-                <div class="input-group search-group">
-                    <button type="button" class="btn btn-secondary" id="search-btn">SEARCH</button>
-                    <button type="button" class="btn btn-secondary" id="clear-filters-btn" style="margin-left:8px; background-color: #e5e7eb; color: #374151;">CLEAR</button>
-                </div>
-            </div>
+        <div class="footer-section">
+          <div class="total-display">
+            TOTAL: <span id="total-amount">0.00</span>
+          </div>
+          <div class="sortName">
+            <button
+              id="sort-name-btn"
+              style="display: none"
+              class="btn btn-secondary"
+            >
+              Sort by Name <i id="sort-name-icon" class="sort-icon"></i>
+            </button>
+          </div>
+          <div class="sortAmount">
+            <button
+              id="sort-amount-btn"
+              style="display: none"
+              class="btn btn-secondary"
+            >
+              Sort by Amount <i id="sort-amount-icon" class="sort-icon"></i>
+            </button>
+          </div>
+          <div class="sortCategory">
+            <button
+              id="sort-category-btn"
+              style="display: none"
+              class="btn btn-secondary"
+            >
+              Sort by Category <i id="sort-category-icon" class="sort-icon"></i>
+            </button>
+          </div>
+          <div class="sortDate">
+            <button
+              id="sort-date-btn"
+              class="btn btn-secondary"
+              style="display: none"
+            >
+              Sort by Date <i id="sort-date-icon" class="sort-icon"></i>
+            </button>
+          </div>
+          <div class="removeSort">
+            <button
+              id="remove-sort-btn"
+              class="btn btn-secondary"
+              style="display: none"
+            >
+              clear <i id="sort-date-icon" class="sort-icon"></i>
+            </button>
+          </div>
+          <div class="pagination">
+            <button id="prev-page" class="page-btn">
+              <i class="bx bx-left-arrow-alt"></i>
+            </button>
+            <span id="page-info">1 / 1</span>
+            <button id="next-page" class="page-btn">
+              <i class="bx bx-right-arrow-alt"></i>
+            </button>
+          </div>
         </div>
-
-        <div class="card section-table">
-            <div class="table-container">
-                <table id="expense-table">
-                    <thead>
-                        <tr>
-                            <th>SRNO</th>
-                            <th>Name</th>
-                            <th>Amount</th>
-                            <th>Category</th>
-                            <th>Date</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="expense-tbody">
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="footer-section">
-                <div class="total-display">
-                    TOTAL: <span id="total-amount">0.00</span>
-                </div>
-                <div class="pagination">
-                    <button id="prev-page" class="page-btn"><i class='bx bx-left-arrow-alt'></i></button>
-                    <span id="page-info">1 / 1</span>
-                    <button id="next-page" class="page-btn"><i class='bx bx-right-arrow-alt'></i></button>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-    
+
     <div id="category-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Manage Categories</h2>
-                <span class="close-btn">&times;</span>
-            </div>
-            <div class="modal-body">
-                <form id="category-form" style="display:flex; gap: 8px; margin-bottom: 1rem;">
-                    <input type="text" id="new-category" placeholder="New Category Name" required style="flex:1;">
-                    <button type="submit" class="btn btn-primary">Add</button>
-                </form>
-                <ul id="category-list">
-                </ul>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Manage Categories</h2>
+          <span class="close-btn">&times;</span>
         </div>
+        <div class="modal-body">
+          <form
+            id="category-form"
+            style="display: flex; gap: 8px; margin-bottom: 1rem"
+          >
+            <input type="text" id="new-category" required style="flex: 1" />
+            <button type="submit" class="btn btn-primary">Add</button>
+          </form>
+          <ul id="category-list"></ul>
+        </div>
+      </div>
     </div>
     <div id="expense-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="expense-modal-title">Add Expense</h2>
-                <span class="close-expense-btn close-btn">&times;</span>
-            </div>
-            <form id="add-expense-form" class="form-grid">
-                <div class="input-group">
-                    <label for="expense-name">Name</label>
-                    <input type="text" id="expense-name" placeholder="E.g., Quarterly Report Printing" required>
-                </div>
-                <div class="input-group">
-                    <label for="expense-amount">Amount</label>
-                    <input type="number" id="expense-amount" placeholder="0.00" step="0.01" required>
-                </div>
-                <div class="input-group">
-                    <label for="expense-category">Category</label>
-                    <select id="expense-category" required>
-                        <option value="" disabled selected>Select...</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label for="expense-date">Date</label>
-                    <input type="date" id="expense-date" required>
-                </div>
-                <div class="buttons-group" style="width: 100%; justify-content: flex-end; margin-top: 1rem;">
-                    <button type="submit" class="btn btn-primary" id="save-expense-btn">SAVE</button>
-                </div>
-            </form>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="expense-modal-title">Add Expense</h2>
+          <span class="close-expense-btn close-btn">&times;</span>
         </div>
+        <form id="add-expense-form" class="form-grid">
+          <div class="input-group">
+            <label for="expense-name">Name</label>
+            <input type="text" id="expense-name" required />
+          </div>
+          <div class="input-group">
+            <label for="expense-amount">Amount</label>
+            <input type="number" id="expense-amount" step="0.01" required />
+          </div>
+          <div class="input-group">
+            <label for="expense-category">Category</label>
+            <select id="expense-category" required>
+              <option value="" disabled selected>Select...</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="expense-date">Date</label>
+            <input type="date" id="expense-date" required />
+          </div>
+          <div
+            class="buttons-group"
+            style="width: 100%; justify-content: flex-end; margin-top: 1rem"
+          >
+            <button type="submit" class="btn btn-primary" id="save-expense-btn">
+              SAVE
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
