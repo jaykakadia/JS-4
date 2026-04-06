@@ -1,5 +1,4 @@
-// let expenses = JSON.parse(localStorage.getItem("expenses")) || [
-let expenses = [
+let expenses = JSON.parse(localStorage.getItem("expenses")) || [
   {
     id: 1,
     name: "Supplies",
@@ -187,8 +186,8 @@ form.addEventListener("submit", (e) => {
   if (!name || !amount || !category || !date) return;
 
   if (editingId) {
-    const index = expenses.findIndex((e) => e.id === editingId);
-    if (index !== -1) {
+    const index = expenses.findIndex((e) => e.id == editingId);
+    if (index != -1) {
       expenses[index] = {
         id: editingId,
         name,
@@ -229,8 +228,9 @@ form.addEventListener("submit", (e) => {
 
 function deleteExpense(id) {
   if (confirm("Are you sure you want to delete this expense?")) {
-    expenses = expenses.filter((e) => e.id !== id);
+    expenses = expenses.filter((e) => e.id != id);
     saveToLocalStorage();
+    // console.log("Original Expenses after deletion:", originalExpenses);
 
     const filtered = getFilteredExpenses();
     const totalPages = Math.ceil(filtered.length / itemsPerPage) || 1;
@@ -241,8 +241,10 @@ function deleteExpense(id) {
 }
 
 function editExpense(id) {
-  const expense = expenses.find((e) => e.id === id);
+  console.log("Editing expense with ID:", id);
+  const expense = expenses.find((e) => e.id == id);
   if (!expense) return;
+  console.log("Expense found for editing:", expense);
 
   nameInput.value = expense.name;
   amountInput.value = expense.amount;
@@ -250,6 +252,7 @@ function editExpense(id) {
   dateInput.value = expense.date;
 
   editingId = id;
+  console.log("Set editingId to:", editingId);
   saveExpenseBtn.textContent = "UPDATE";
   document.getElementById("expense-modal-title").textContent = "Edit Expense";
   expenseModal.classList.add("show");
